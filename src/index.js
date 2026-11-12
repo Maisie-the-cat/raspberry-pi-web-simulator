@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Banner from './component/banner/banner';
-import Toolbar from './component/toolbar/toolbar';
 import Display from './component/display/display';
 import HelpOverlay from './component/helpOverlay/helpOverlay';
 import Localization from './localization/localization';
@@ -9,7 +8,7 @@ import { traceEvent } from './lib/telemetry.js';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import ErrorMap from './data/errorMap';
-import { Router, Route, Link, browserHistory } from 'react-router';
+import { Router, Route, browserHistory } from 'react-router';
 
 import Sample from './lib/sample.js';
 import { tracePageView,tracePageViewAI } from './lib/telemetry.js';
@@ -29,10 +28,13 @@ class Index extends Component {
       showHelp: false,
     }
     if (typeof(Storage) !== "undefined") {
-        var disableHelp = localStorage.getItem("disable-help");
-        if(disableHelp == null) {
+        const disableHelp = localStorage.getItem("disable-help");
+        if(disableHelp === null) {
             traceEvent('help-open-first');
-            this.state.showHelp = true;
+            this.state = {
+              ...this.state,
+              showHelp: true
+            };
             localStorage.setItem("disable-help","true");
         }
     }
@@ -158,7 +160,7 @@ class Index extends Component {
           let searchText = "'[Your IoT hub device connection string]'";
           let found;
           for (var i = 0; i < aTags.length; i++) {
-              if (aTags[i].textContent == searchText) {
+              if (aTags[i].textContent === searchText) {
                   found = aTags[i];
                   break;
               }

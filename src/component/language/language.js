@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { traceEvent } from '../../lib/telemetry.js';
 import './language.scss';
 import Localization from '../../localization/localization';
 import { browserHistory } from 'react-router';

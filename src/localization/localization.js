@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import LocalizedStrings from 'react-localization';
 
 class Localization extends Component {

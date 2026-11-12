@@ -20,8 +20,8 @@ class Sample {
     constructor() {
         this.runningFunction = null;
         if(!window.oldSetTimeout) {
-            window.timeoutList = new Array();
-            window.intervalList = new Array();
+            window.timeoutList = [];
+            window.intervalList = [];
 
             window.oldSetTimeout = window.setTimeout;
             window.oldSetInterval = window.setInterval;
@@ -58,13 +58,13 @@ class Sample {
                 for(var i in window.timeoutList) {
                     window.oldClearTimeout(window.timeoutList[i]);
                 }
-                window.timeoutList = new Array();
+                window.timeoutList = [];
             };
             window.clearAllIntervals = function() {
                 for(var i in window.intervalList) {
                     window.oldClearInterval(window.intervalList[i]);
                 }
-                window.intervalList = new Array();
+                window.intervalList = [];
             };
         }
         this.actualClient = null;
@@ -109,6 +109,7 @@ class Sample {
         try {
             traceEvent('run-sample');
             var src = codeFactory.getRunCode('index', replaces, prefix);
+            // eslint-disable-next-line no-new-func
             this.runningFunction = new Function('replaces' + prefix, src);
             this.runningFunction({
                 wpi: wpi,
