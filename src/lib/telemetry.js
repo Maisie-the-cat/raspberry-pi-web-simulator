@@ -12,7 +12,7 @@ const userProperties = {
   project: getAppName(),
   userId: getUserId(),
   version: getAppVersion(),
-  page: location
+  page: window.location
 };
 
 AppInsights.downloadAndSetup({ instrumentationKey: intrumentKey });

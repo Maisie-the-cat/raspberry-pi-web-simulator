@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { traceEvent } from '../../lib/telemetry.js';
 import './helpOverlay.scss';
-import closeButton from '../../img/closeButton.png';
 import Localization from '../../localization/localization';
 // import connectionStringInPortal from '../../img/connectionStringInPortal.png';
 import img1 from '../../img/step1.png';
@@ -102,7 +101,7 @@ class HelpOverlay extends Component {
 
     onClose = () => {
         this.props.toggleHelpState();
-        if (this.state.step == this.state.numOfSteps - 1) {
+        if (this.state.step === this.state.numOfSteps - 1) {
             traceEvent('help-complete');
         }
         this.setState(() => {
@@ -209,7 +208,7 @@ class HelpOverlay extends Component {
                                 </div>
                                 <div className={`paragraph-container ${this.state.step === 1 ? '' : 'element-none'}`}>
                                     <div className={`paragraph ${this.state.subStep === 0 ? 'paragraph-selected' : ''}`} style={{ transform: "translate(0,-" + this.state.offset[this.state.subStep] + "px" }}>
-                                        1. {Localization.getLocalizedString().helpContentInThe} <a target="_blank" href="https://portal.azure.com/">{Localization.getLocalizedString().helpContentAzurePortal}</a>, {Localization.getLocalizedString().helpContentClick} <span className="bold">{Localization.getLocalizedString().helpContent1}</span> {Localization.getLocalizedString().helpContent2}.
+                                        1. {Localization.getLocalizedString().helpContentInThe} <a target="_blank" rel="noreferrer noopener" href="https://portal.azure.com/">{Localization.getLocalizedString().helpContentAzurePortal}</a>, {Localization.getLocalizedString().helpContentClick} <span className="bold">{Localization.getLocalizedString().helpContent1}</span> {Localization.getLocalizedString().helpContent2}.
                                 </div>
                                     <div className={`paragraph ${this.state.subStep === 1 ? 'paragraph-selected' : ''}`} style={{ transform: "translate(0,-" + this.state.offset[this.state.subStep] + "px" }}>
                                         2. {Localization.getLocalizedString().helpContentInThe} <span className="bold">{Localization.getLocalizedString().helpContent3}</span> {Localization.getLocalizedString().helpContentPane}, {Localization.getLocalizedString().helpContentClick} <span className="bold">{Localization.getLocalizedString().helpContentAdd}</span> {Localization.getLocalizedString().helpContent4}.
@@ -241,22 +240,22 @@ class HelpOverlay extends Component {
                                 </div>
                             </div>
                             <div className="link-container">
-                                <a target="_blank" href={Localization.getLocalizedString().helpDocsLink}>{Localization.getLocalizedString().helpLinkSeeDoc}</a>
-                                <a target="_blank" href="https://github.com/Azure-Samples/raspberry-pi-web-simulator">{Localization.getLocalizedString().helpLinkViewSource}</a>
+                                <a target="_blank" rel="noreferrer noopener" href={Localization.getLocalizedString().helpDocsLink}>{Localization.getLocalizedString().helpLinkSeeDoc}</a>
+                                <a target="_blank" rel="noreferrer noopener" href="https://github.com/Azure-Samples/raspberry-pi-web-simulator">{Localization.getLocalizedString().helpLinkViewSource}</a>
                             </div>
                         </div>
                         <div onWheel={this.changeSubStep} className="picture-instruction">
                             <div className={`picture-container ${this.state.step === 0 ? '' : 'element-none'}`} >
-                                <img className="picture" src={img1} />
+                                <img className="picture" src={img1} alt="Step 1" />
                             </div>
                             <div className={`picture-container ${this.state.step === 1 ? '' : 'element-none'}`} >
-                                <img className="picture" style={{ left: "0%", transform: "translate(" + this.state.subStep * -100 + "%,0)" }} src={img2_1} />
-                                <img className="picture" style={{ left: "100%", transform: "translate(" + this.state.subStep * -100 + "%,0)" }} src={img2_2} />
-                                <img className="picture" style={{ left: "200%", transform: "translate(" + this.state.subStep * -100 + "%,0)" }} src={img2_3} />
+                                <img className="picture" alt="Step" style={{ left: "0%", transform: "translate(" + this.state.subStep * -100 + "%,0)" }} src={img2_1} />
+                                <img className="picture" alt="Step" style={{ left: "100%", transform: "translate(" + this.state.subStep * -100 + "%,0)" }} src={img2_2} />
+                                <img className="picture" alt="Step" style={{ left: "200%", transform: "translate(" + this.state.subStep * -100 + "%,0)" }} src={img2_3} />
                             </div>
                             <div className={`picture-container ${this.state.step === 2 ? '' : 'element-none'}`} >
-                                <img className="picture" style={{ left: "0%", transform: "translate(" + this.state.subStep * -100 + "%,0)" }} src={img3_1} />
-                                <img className="picture" style={{ left: "100%", transform: "translate(" + this.state.subStep * -100 + "%,0)" }} src={img3_2} />
+                                <img className="picture" alt="Step" style={{ left: "0%", transform: "translate(" + this.state.subStep * -100 + "%,0)" }} src={img3_1} />
+                                <img className="picture" alt="Step" style={{ left: "100%", transform: "translate(" + this.state.subStep * -100 + "%,0)" }} src={img3_2} />
                             </div>
                             <div className="picture-indicator-container" >
                                 <div className={`picture-indicator ${this.state.step === 0 || this.state.numOfSubStep[this.state.step] <= 1 ? 'element-none' : ''} ${this.state.subStep === 0 ? 'picture-indicator-selected' : ''}`} onClick={this.goToSubStep.bind(this, 0)} />
