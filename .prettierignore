@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build output
+build/
+dist/
+
+# Coverage
+coverage/
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# Auto-generated files
+*.min.js
+*.min.css
+
+# IDE
+.idea/
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Config files that are already formatted
+*.json
+*.yml
+*.yaml
+
+# Markdown (optional - uncomment if you don't want to format markdown)
+# *.md
+
+# HTML (optional - uncomment if you don't want to format HTML)
+# *.html

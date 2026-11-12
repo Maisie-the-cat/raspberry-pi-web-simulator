@@ -6,27 +6,27 @@ process.env.NODE_ENV = 'development';
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-require('dotenv').config({silent: true});
+require('dotenv').config({ silent: true });
 
-var chalk = require('chalk');
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var historyApiFallback = require('connect-history-api-fallback');
-var httpProxyMiddleware = require('http-proxy-middleware');
-var detect = require('detect-port');
-var clearConsole = require('react-dev-utils/clearConsole');
-var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-var getProcessForPort = require('react-dev-utils/getProcessForPort');
-var openBrowser = require('react-dev-utils/openBrowser');
-var prompt = require('react-dev-utils/prompt');
-var fs = require('fs');
-var config = require('../config/webpack.config.dev');
-var paths = require('../config/paths');
+const chalk = require('chalk');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const historyApiFallback = require('connect-history-api-fallback');
+const httpProxyMiddleware = require('http-proxy-middleware');
+const detect = require('detect-port');
+const clearConsole = require('react-dev-utils/clearConsole');
+const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const getProcessForPort = require('react-dev-utils/getProcessForPort');
+const openBrowser = require('react-dev-utils/openBrowser');
+const prompt = require('react-dev-utils/prompt');
+const fs = require('fs');
+const config = require('../config/webpack.config.dev');
+const paths = require('../config/paths');
 
-var useYarn = fs.existsSync(paths.yarnLockFile);
-var cli = useYarn ? 'yarn' : 'npm';
-var isInteractive = process.stdout.isTTY;
+const useYarn = fs.existsSync(paths.yarnLockFile);
+const cli = useYarn ? 'yarn' : 'npm';
+const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -34,13 +34,13 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Tools like Cloud9 rely on this.
-var DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
-var compiler;
-var handleCompile;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
+let compiler;
+let handleCompile;
 
 // You can safely remove this after ejecting.
 // We only use this block for testing of Create React App itself:
-var isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
+const isSmokeTest = process.argv.some(arg => arg.indexOf('--smoke-test') > -1);
 if (isSmokeTest) {
   handleCompile = function (err, stats) {
     if (err || stats.hasErrors() || stats.hasWarnings()) {
@@ -54,24 +54,24 @@ if (isSmokeTest) {
 function setupCompiler(host, port, protocol) {
   // "Compiler" is a low-level interface to Webpack.
   // It lets us listen to some events and provide our own custom messages.
-  compiler = webpack(config, handleCompile);
+  compiler = webpack(config);
 
   // "invalid" event fires when you have changed a file, and Webpack is
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
-  compiler.plugin('invalid', function() {
+  compiler.hooks.invalid.tap('invalid', function() {
     if (isInteractive) {
       clearConsole();
     }
     console.log('Compiling...');
   });
 
-  var isFirstCompile = true;
+  let isFirstCompile = true;
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.plugin('done', function(stats) {
+  compiler.hooks.done.tap('done', function(stats) {
     if (isInteractive) {
       clearConsole();
     }
@@ -79,9 +79,9 @@ function setupCompiler(host, port, protocol) {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
-    var messages = formatWebpackMessages(stats.toJson({}, true));
-    var isSuccessful = !messages.errors.length && !messages.warnings.length;
-    var showInstructions = isSuccessful && (isInteractive || isFirstCompile);
+    const messages = formatWebpackMessages(stats.toJson({ all: false, errors: true, warnings: true }));
+    const isSuccessful = !messages.errors.length && !messages.warnings.length;
+    const showInstructions = isSuccessful && (isInteractive || isFirstCompile);
 
     if (isSuccessful) {
       console.log(chalk.green('Compiled successfully!'));
@@ -130,7 +130,7 @@ function setupCompiler(host, port, protocol) {
 // It allows us to log custom error messages on the console.
 function onProxyError(proxy) {
   return function(err, req, res){
-    var host = req.headers && req.headers.host;
+    const host = req.headers && req.headers.host;
     console.log(
       chalk.red('Proxy error:') + ' Could not proxy request ' + chalk.cyan(req.url) +
       ' from ' + chalk.cyan(host) + ' to ' + chalk.cyan(proxy) + '.'
@@ -155,7 +155,7 @@ function onProxyError(proxy) {
 function addMiddleware(devServer) {
   // `proxy` lets you to specify a fallback server during development.
   // Every unrecognized request will be forwarded to it.
-  var proxy = require(paths.appPackageJson).proxy;
+  const proxy = require(paths.appPackageJson).proxy;
   devServer.use(historyApiFallback({
     // Paths with dots should still use the history fallback.
     // See https://github.com/facebookincubator/create-react-app/issues/387.
@@ -165,8 +165,8 @@ function addMiddleware(devServer) {
     // So if `proxy` is specified, we need to decide which fallback to use.
     // We use a heuristic: if request `accept`s text/html, we pick /index.html.
     // Modern browsers include text/html into `accept` header when navigating.
-    // However API calls like `fetch()` won’t generally accept text/html.
-    // If this heuristic doesn’t work well for you, don’t use `proxy`.
+    // However API calls like `fetch()` won't generally accept text/html.
+    // If this heuristic doesn't work well for you, don't use `proxy`.
     htmlAcceptHeaders: proxy ?
       ['text/html'] :
       ['text/html', '*/*']
@@ -185,11 +185,11 @@ function addMiddleware(devServer) {
     // - /*.hot-update.json (WebpackDevServer uses this too for hot reloading)
     // - /sockjs-node/* (WebpackDevServer uses this for hot reloading)
     // Tip: use https://jex.im/regulex/ to visualize the regex
-    var mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
+    const mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
 
     // Pass the scope regex both to Express and to the middleware for proxying
     // of both HTTP and WebSockets to work without false positives.
-    var hpm = httpProxyMiddleware(pathname => mayProxy.test(pathname), {
+    const hpm = httpProxyMiddleware(pathname => mayProxy.test(pathname), {
       target: proxy,
       logLevel: 'silent',
       onProxyReq: function(proxyReq) {
@@ -220,15 +220,19 @@ function addMiddleware(devServer) {
 }
 
 function runDevServer(host, port, protocol) {
-  var devServer = new WebpackDevServer(compiler, {
+  const devServer = new WebpackDevServer({
+    ...config.devServer,
     // Enable gzip compression of generated files.
     compress: true,
     // Silence WebpackDevServer's own logs since they're generally not useful.
     // It will still show compile warnings and errors with this setting.
-    clientLogLevel: 'none',
+    client: {
+      logging: 'none',
+      overlay: false
+    },
     // By default WebpackDevServer serves physical files from current directory
     // in addition to all the virtual build products that it serves from memory.
-    // This is confusing because those files won’t automatically be available in
+    // This is confusing because those files won't automatically be available in
     // production build folder unless we copy them. However, copying the whole
     // project directory is dangerous because we may expose sensitive files.
     // Instead, we establish a convention that only files in `public` directory
@@ -240,7 +244,13 @@ function runDevServer(host, port, protocol) {
     // for files like `favicon.ico`, `manifest.json`, and libraries that are
     // for some reason broken when imported through Webpack. If you just want to
     // use an image, put it in `src` and `import` it from JavaScript instead.
-    contentBase: paths.appPublic,
+    static: {
+      directory: paths.appPublic,
+      publicPath: config.output.publicPath,
+      watch: {
+        ignored: /node_modules/
+      }
+    },
     // Enable hot reloading server. It will provide /sockjs-node/ endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
@@ -249,10 +259,12 @@ function runDevServer(host, port, protocol) {
     hot: true,
     // It is important to tell WebpackDevServer to use the same "root" path
     // as we specified in the config. In development, we always serve from /.
-    publicPath: config.output.publicPath,
     // WebpackDevServer is noisy by default so we emit custom message instead
-    // by listening to the compiler events with `compiler.plugin` calls above.
-    quiet: true,
+    // by listening to the compiler events with `compiler.hooks` calls above.
+    devMiddleware: {
+      publicPath: config.output.publicPath,
+      writeToDisk: false
+    },
     // Reportedly, this avoids CPU overload on some systems.
     // https://github.com/facebookincubator/create-react-app/issues/293
     watchOptions: {
@@ -260,14 +272,15 @@ function runDevServer(host, port, protocol) {
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === "https",
-    host: host
-  });
+    host: host,
+    port: port
+  }, compiler);
 
   // Our custom middleware proxies requests to /index.html or a remote API.
   addMiddleware(devServer);
 
   // Launch WebpackDevServer.
-  devServer.listen(port, err => {
+  devServer.startCallback(err => {
     if (err) {
       return console.log(err);
     }
@@ -283,8 +296,8 @@ function runDevServer(host, port, protocol) {
 }
 
 function run(port) {
-  var protocol = process.env.HTTPS === 'true' ? "https" : "http";
-  var host = process.env.HOST || 'localhost';
+  const protocol = process.env.HTTPS === 'true' ? "https" : "http";
+  const host = process.env.HOST || 'localhost';
   setupCompiler(host, port, protocol);
   runDevServer(host, port, protocol);
 }
@@ -299,8 +312,8 @@ detect(DEFAULT_PORT).then(port => {
 
   if (isInteractive) {
     clearConsole();
-    var existingProcess = getProcessForPort(DEFAULT_PORT);
-    var question =
+    const existingProcess = getProcessForPort(DEFAULT_PORT);
+    const question =
       chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.' +
         ((existingProcess) ? ' Probably:\n  ' + existingProcess : '')) +
         '\n\nWould you like to run the app on another port instead?';

@@ -3,14 +3,30 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://*.paho.org; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://*.paho.org; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' wss:// wss://*.paho.org; font-src 'self' https://cdnjs.cloudflare.com; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta name="description" content="This is a Web simulator for Raspberry Pi as client and Azure IoT Hub as service. You can enjoy Azure IoT journey without a real device.">
+    <meta name="keywords" content="Raspberry Pi, Azure IoT Hub, IoT, Simulator, Web Client">
+    <meta name="author" content="Azure Samples">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Raspberry Pi Azure IoT Web Simulator">
+    <meta property="og:description" content="This is a Web simulator for Raspberry Pi as client and Azure IoT Hub as service.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://azure-samples.github.io/raspberry-pi-web-simulator/" />
+    <link rel="canonical" href="https://azure-samples.github.io/raspberry-pi-web-simulator/" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <title>Raspberry Pi Azure IoT Web Simulator</title>
-    <meta name="description" content="This is a Web simulator for Raspberry Pi as client and Azure IoT Hub as service. You can enjoy Azure IoT journey without a real device.">
-    <link rel="canonical" href="https://azure-samples.github.io/raspberry-pi-web-simulator/" />
     <script src="%PUBLIC_URL%/mqttws31.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser-polyfill.min.js"></script>
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   </head>
   <body>  
     <div id="root"></div>
+    <!-- Built with React and Azure IoT Hub -->
   </body>
 </html>
